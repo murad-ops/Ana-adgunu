@@ -1,4 +1,87 @@
-<!DOCTYPE html>
+button:hover{
+background:#ff4d8d;
+}
+
+.sign{
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
+color:#ff2f78;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="hearts">
+<span class="heart" style="left:5%;animation-delay:0s;">💖</span>
+<span class="heart" style="left:20%;animation-delay:2s;">💕</span>
+<span class="heart" style="left:40%;animation-delay:1s;">❤️</span>
+<span class="heart" style="left:60%;animation-delay:3s;">💗</span>
+<span class="heart" style="left:80%;animation-delay:4s;">💞</span>
+</div>
+
+<h1>🎉 Ad Günün Mübarək Canım Anam ❤️</h1>
+
+<img src="ana.jpg" class="photo">
+
+<div class="envelope">
+
+<div class="top">
+💌 Sənə Məktub
+</div>
+
+<button onclick="openLetter()">
+Məktubu Aç ❤️
+</button>
+
+<div class="letter" id="letter">
+
+Canım anam ❤️<br><br>
+
+Ad gününü ürəkdən təbrik eliyirəm.<br><br>
+
+Neçə belə illərə. Allah səni başımızdan əskik etməsin. Həyatda istədiyin nə varsa tezliklə yerinə yetirilsin.<br><br>
+
+Sən mənim üçün dünyanın ən dəyərli insanısan. Həmişə yanımda olduğun, mənə dəstək olduğun və hər şeyə dözdüyün üçün sənə sonsuz təşəkkür edirəm. Mən səni çox sevirəm. ❤️<br><br>
+
+😂 BİDƏ VAXTIN OLANDA MURADI HƏKİMƏ GÖTÜR.
+
+<div class="sign">
+Səni sevən oğlun<br>
+❤️ Murad ❤️
+</div>
+
+</div>
+
+</div><script>
+
+function openLetter(){
+document.getElementById("letter").style.display="block";
+}
+
+const hearts=document.querySelector(".hearts");
+
+setInterval(()=>{
+const heart=document.createElement("span");
+heart.className="heart";
+heart.innerHTML=["❤️","💖","💕","💗","💞"][Math.floor(Math.random()*5)];
+heart.style.left=Math.random()*100+"%";
+heart.style.fontSize=(20+Math.random()*20)+"px";
+heart.style.animationDuration=(5+Math.random()*4)+"s";
+hearts.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},9000);
+
+},500);
+
+</script>
+
+</body>
+</html><!DOCTYPE html>
 <html lang="az">
 <head>
 <meta charset="UTF-8">
