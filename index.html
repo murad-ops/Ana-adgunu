@@ -121,13 +121,20 @@ Murad, Xanlar və Brilliyant
 </div>
 
 </div>
-
-</div><script>
-
 function openLetter(){
 document.getElementById("letter").style.display="block";
+
+const horn=document.getElementById("horn");
+if(horn){
+horn.currentTime=0;
+horn.play();
 }
 
+const music=document.getElementById("music");
+if(music){
+music.play();
+}
+}
 setInterval(function(){
 
 const heart=document.createElement("div");
