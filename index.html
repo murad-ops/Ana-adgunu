@@ -1,199 +1,378 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ad Günün Mübarək Ana ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Günün Mübarək!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
+        body {
+            background-color: #ffe6f0;
+            font-family: 'Montserrat', sans-serif;
+            color: #d63384;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-body{
-background:linear-gradient(135deg,#ffb6d9,#ffd6ea);
-overflow:hidden;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-}
+        .container {
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            max-height: 850px;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffcbe6 100%);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(214, 51, 132, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-canvas{
-position:fixed;
-top:0;
-left:0;
-pointer-events:none;
-}
+        /* Başlanğıc Giriş Pəncərəsi (Musiqini avtomatik başlatmaq üçün) */
+        #welcome-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 230, 240, 0.95);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            transition: opacity 0.5s ease;
+        }
 
-.container{
-text-align:center;
-z-index:5;
-}
+        .section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+            transform: scale(0.95);
+        }
 
-.envelope{
-width:260px;
-height:170px;
-background:#ff5ca8;
-margin:auto;
-position:relative;
-cursor:pointer;
-border-radius:10px;
-box-shadow:0 0 25px rgba(0,0,0,.3);
-transition:.5s;
-}
+        .section.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+            z-index: 10;
+        }
 
-.envelope:hover{
-transform:scale(1.05);
-}
+        h1, h2 {
+            font-family: 'Pacifico', cursive;
+            color: #c71585;
+            margin-bottom: 20px;
+        }
 
-.flap{
-position:absolute;
-top:0;
-left:0;
-width:0;
-height:0;
-border-left:130px solid transparent;
-border-right:130px solid transparent;
-border-top:90px solid #ff89bf;
-transform-origin:top;
-transition:1s;
-}
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #8b0042;
+            margin-bottom: 25px;
+        }
 
-.letter{
-position:absolute;
-width:92%;
-height:95%;
-left:4%;
-bottom:5%;
-background:white;
-border-radius:10px;
-padding:15px;
-overflow:auto;
-transform:translateY(100%);
-transition:1s;
-text-align:center;
-}
-.letter img{
-width:170px;
-border-radius:15px;
-margin-bottom:15px;
-box-shadow:0 0 15px pink;
-}
+        .btn {
+            background-color: #ff1493;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+            outline: none;
+        }
 
-.letter h2{
-color:#ff2f7d;
-margin-bottom:10px;
-}
+        .btn:hover {
+            background-color: #db7093;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(255, 20, 147, 0.6);
+        }
 
-.letter p{
-font-size:18px;
-line-height:1.7;
-color:#444;
-font-weight:bold;
-}
+        .heart {
+            position: absolute;
+            color: #ff1493;
+            animation: floatUp 4s linear infinite;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+        }
 
-.show .flap{
-transform:rotateX(180deg);
-}
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.2);
+                opacity: 0;
+            }
+        }
 
-.show .letter{
-transform:translateY(-15px);
-}
+        .intro-heart {
+            font-size: 80px;
+            color: #ff1493;
+            animation: heartbeat 1.5s infinite;
+            margin-bottom: 20px;
+        }
 
-button{
-margin-top:20px;
-padding:12px 24px;
-border:none;
-border-radius:30px;
-background:#ff2f7d;
-color:white;
-font-size:18px;
-cursor:pointer;
-box-shadow:0 0 15px hotpink;
-}
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
 
-button:hover{
-transform:scale(1.08);
-}
+        .envelope-container {
+            position: relative;
+            width: 260px;
+            height: 180px;
+            background: #ffb6c1;
+            border-radius: 0 0 10px 10px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
 
-.heart{
-position:fixed;
-font-size:24px;
-color:#Ana sənin ad gününü ürəkdən təbrik edirik.<br><br>
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 130px solid transparent;
+            border-right: 130px solid transparent;
+            border-top: 100px solid #ff69b4;
+            transform-origin: top;
+            transition: transform 0.6s ease;
+            z-index: 5;
+        }
 
-Ürəyində nə istəyin varsa tezliklə gerçəkləşsin.<br><br>
+        .envelope-container.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
 
-Neçə belə illərə. ❤️<br><br>
+        .letter-preview {
+            position: absolute;
+            bottom: 10px;
+            width: 90%;
+            height: 80%;
+            background: white;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.6s ease;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
 
-Səni çox sevirik. 💖<br><br>
+        .envelope-container.open .letter-preview {
+            transform: translateY(-70px);
+            z-index: 6;
+        }
 
-Bir də arada Muradı həkimə götür. 😄
-</p>
+        .photo-frame {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 6px solid #fff;
+            box-shadow: 0 8px 25px rgba(214, 51, 132, 0.3);
+            overflow: hidden;
+            margin-bottom: 25px;
+            background-color: #fff;
+        }
 
-</div>
-</div>
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-<button onclick="openLetter()">
-💌 Aç
-</button>
+        .wish-card {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(214, 51, 132, 0.15);
+            border: 2px dashed #ff69b4;
+            margin-bottom: 25px;
+        }
 
-</div>
+        .final-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
 
-<audio id="music" src="music.mp3" loop></audio>
-<audio id="horn" src="horn.mp3"></audio>
+    <!-- Musiqi və Səs Elementləri (Music.mp3 və Horn.mp3 böyük/kiçik hərf dəqiqliyi ilə) -->
+    <audio id="bgMusic" src="Music.mp3" loop></audio>
+    <audio id="hornSound" src="Horn.mp3"></audio>
 
-<script>
+    <!-- Sayta daxil olan kimi musiqini işə salmaq üçün ilk ekran -->
+    <div id="welcome-overlay">
+        <div class="intro-heart">💖</div>
+        <h1>Əziz Anamız</h1>
+        <p>Sənin üçün hazırladığımız sürprizi görmək üçün toxun!</p>
+        <button class="btn" onclick="startExperience()">Başlayaq</button>
+    </div>
 
-const envelope=document.getElementById("envelope");
-const music=document.getElementById("music");
-const horn=document.getElementById("horn");
+    <div class="container" id="mainContainer">
 
-function openLetter(){
+        <!-- 1-ci Hissə: Giriş -->
+        <div class="section active" id="sec1">
+            <div class="intro-heart">💖</div>
+            <h1>Xoş Gəldin!</h1>
+            <p>Sənin üçün xüsusi hazırlanmış bu hədiyyəni kəşf etməyə hazırsansa, davam edək!</p>
+            <button class="btn" onclick="nextSection(2)">Davam Et</button>
+        </div>
 
-envelope.classList.add("show");
+        <!-- 2-ci Hissə: Açılan Zərf -->
+        <div class="section" id="sec2">
+            <h2>Sənin üçün məktub var</h2>
+            <p>Zərfi açmaq üçün üzərinə toxun:</p>
+            <div class="envelope-container" id="envelope" onclick="openEnvelope()">
+                <div class="envelope-flap"></div>
+                <div class="letter-preview">
+                    <p style="font-size: 0.9rem; margin:0; color:#d63384; font-weight:600;">Oxumaq üçün toxun!</p>
+                </div>
+            </div>
+            <button class="btn" id="nextTo3" style="display:none;" onclick="nextSection(3)">Növbəti</button>
+        </div>
 
-music.play();
+        <!-- 3-cü Hissə: Şəkil (anam.jpg) -->
+        <div class="section" id="sec3">
+            <h2>Gözəl Anamız</h2>
+            <div class="photo-frame">
+                <img src="anam.jpg" alt="Ana">
+            </div>
+            <p>Dünyanın ən gözəl və qayğıkeş anası!</p>
+            <button class="btn" onclick="nextSection(4)">Növbəti</button>
+        </div>
 
-horn.play();
+        <!-- 4-cü Hissə: Əsas Mətn -->
+        <div class="section" id="sec4">
+            <h2>Təbriklər!</h2>
+            <div class="wish-card">
+                <p style="font-size: 1.25rem; font-weight: 600; color: #c71585;">
+                    Adgününü ürəkdən təbrik edirik, daima üzünün gülməsini arzulayırıq, yaxşı ki varsan!
+                </p>
+            </div>
+            <button class="btn" onclick="nextSection(5)">Sonuncu</button>
+        </div>
 
-  }const canvas=document.getElementById("canvas");
-const ctx=canvas.getContext("2d");
+        <!-- 5-ci Hissə: Sonluq və Partlayış -->
+        <div class="section" id="sec5">
+            <div class="final-icon">🎉🎂✨</div>
+            <h1>Yaxşı ki Varsan!</h1>
+            <p>Həmişə belə gülərüz və xoşbəxt olasan. Səni çox sevirik!</p>
+            <button class="btn" onclick="restart()">Yenidən Bax</button>
+        </div>
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+    </div>
 
-window.addEventListener("resize",()=>{
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-});
+    <script>
+        let currentSec = 1;
 
-const confetti=[];
+        // Sayta girib "Başlayaq" düyməsinə basıldığı anda musiqi çalmağa başlayır
+        function startExperience() {
+            let music = document.getElementById('bgMusic');
+            music.play().then(() => {
+                console.log("Musiqi çalmağa başladı");
+            }).catch(e => {
+                console.log("Musiqi çalınmadı:", e);
+            });
 
-for(let i=0;i<180;i++){
+            // Giriş pəncərəsini yox edirik
+            let overlay = document.getElementById('welcome-overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 500);
+        }
 
-confetti.push({
+        function nextSection(secNum) {
+            if (secNum === 5) {
+                createConfetti();
+            }
 
-x:Math.random()*canvas.width,
+            document.getElementById('sec' + currentSec).classList.remove('active');
+            document.getElementById('sec' + secNum).classList.add('active');
+            currentSec = secNum;
+        }
 
-y:Math.random()*canvas.height,
+        function openEnvelope() {
+            let env = document.getElementById('envelope');
+            if (!env.classList.contains('open')) {
+                let horn = document.getElementById('hornSound');
+                horn.currentTime = 0;
+                horn.play().catch(e => console.log("Horn play blocked:", e));
+            }
 
-r:Math.random()*6+2,
+            env.classList.add('open');
+            document.getElementById('nextTo3').style.display = 'inline-block';
+        }
 
-dx:(Math.random()-0.5)*2,
+        function restart() {
+            document.getElementById('sec' + currentSec).classList.remove('active');
+            document.getElementById('sec1').classList.add('active');
+            currentSec = 1;
+            document.getElementById('envelope').classList.remove('open');
+            document.getElementById('nextTo3').style.display = 'none';
+        }
 
-dy:Math.random()*3+1,
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            document.getElementById('mainContainer').appendChild(heart);
 
-color:[
-"#ff2f7d",
-"#ff69b4",
-"#ffffff",
-"#ffd700",
-"#ff99cc"
-][Math.floor(Math.random()*</script>
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
 
+        setInterval(createHeart, 400);
+
+        function createConfetti() {
+            for(let i = 0; i < 30; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+        }
+    </script>
 </body>
 </html>
